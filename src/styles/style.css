@@ -1,0 +1,449 @@
+/* WRITER */
+
+.writer::after
+{
+    content: '|';
+    opacity: 1;
+    animation: blink 1s infinite steps(1);
+    margin-left: -5px;
+}
+
+@keyframes blink
+{
+    0%,100%{
+        opacity: 1;
+    }
+    50%{
+        opacity: 0;
+    }
+}
+
+/* MENU STYLE */
+
+body
+{
+    background-color: #666;
+}
+
+.container-game-menu
+{
+    color: #fff;
+}
+
+
+header
+{
+    background-color: rgb(255, 224, 47);
+    box-shadow: 2px 5px 20px #000;
+    font-size: 3rem;
+}
+
+@media (max-width: 600px){
+    header
+    {
+        background-color: rgb(255, 224, 47);
+        box-shadow: 2px 5px 20px #000;
+        font-size: 2rem;
+    }
+}
+
+header h1
+{
+    text-shadow: 1px 1px 3px #444;
+}
+
+.total-words
+{
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 5px #444;
+}
+
+#btn_popup_creator
+{
+    cursor: pointer;
+    border: none;
+    background-color: #999;
+    color: #fff;
+    transition: 0.2s;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    border: 2px solid transparent;
+}
+
+#btn_popup_creator:hover
+{
+    background-color: transparent;
+    border: solid 2px #fff;
+    box-shadow: 2px 1px 5px #333;
+}
+
+.menu-button
+{
+    outline: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 7px 5px 5px #333;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+
+.default .menu-button
+{
+    color: #fff;   
+}
+.custom .menu-button
+{
+    color: #666;
+}
+
+.btn-remove-level
+{
+    color: #fff;
+    background-color: rgb(228, 122, 35);
+    border: none;
+    outline: none;
+    cursor: pointer;
+    transition: .2s;
+    border-radius: 3px;
+}
+
+.btn-remove-level:hover
+{
+    font-weight: 900;
+    border-radius: 5px;
+    background-color:  rgb(228, 122, 35);
+    height: 30px;
+    width: 30px;
+}
+
+
+.Fácil
+{
+    background-color:rgba(52, 189, 253, 0.904);
+    border: 3px solid rgba(75, 188, 240, 0.876);
+}
+.Fácil:hover{
+    color: rgba(52, 189, 253, 0.904);
+    text-shadow:rgba(41, 163, 219, 0.767) 1px 1px 5px;
+}
+
+.Médio
+{
+    background-color: rgb(58, 223, 121, 0.904);
+    border: 3px solid rgb(52, 192, 34);
+}
+.Médio:Hover
+{
+    color: rgb(58, 223, 121, 0.904);
+    text-shadow: rgba(104, 233, 153, 0.705) 1px 1px 5px;
+}
+
+.Difícil
+{
+    background-color: rgb(255, 224, 47, 0.904);
+    border: 3px solid rgb(214, 200, 3);
+}
+.Difícil:hover
+{
+    color:  rgb(255, 224, 47, 0.904);
+    text-shadow:rgba(238, 218, 103, 0.726) 1px 1px 5px;
+}
+
+.Mestre
+{
+    background-color: rgb(255, 130, 80, 0.904);
+    border: 3px solid rgb(228, 122, 35);
+}
+.Mestre:hover
+{
+    color:  rgb(255, 130, 80, 0.904);
+    text-shadow: rgba(228, 136, 100, 0.726) 1px 1px 5px;
+}
+
+.levels-list .menu-button:hover
+{
+    letter-spacing: 3px;
+    font-size: 2rem;
+    background-color: transparent;
+    transition: .2s;
+}
+
+.custom .menu-button:hover
+{
+    color: #fff;
+    border: 3px solid #fff;
+}
+
+.levels-list h2
+{
+    text-shadow: 5px 3px 5px #444;
+    text-transform: uppercase;
+    font-size: 2rem;
+}
+
+.levels-list hr
+{
+    box-shadow: 7px 5px 5px #444;
+}
+
+.container-game-menu ul
+{
+    padding: 0;
+    list-style: none;
+}
+
+.game-header ul
+{
+    list-style: none;
+}
+
+.createdLevels-empty
+{
+    color: #bbb;
+    font-size: 1.5rem;
+    text-shadow: 2px 2px 5px #444;
+}
+
+footer
+{
+    border-top: 1px solid #aaa;
+}
+
+footer p
+{
+    color: #ddd;
+    font-size: large;
+}
+
+/* LEVEL CREATOR STYLE */
+
+.level-creator-content
+{
+    background-color: #eee;
+    border-radius: 5px;
+}
+
+.btn-back-creator
+{
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    background-color: rgba(255, 0, 0, 0.493);
+    border-radius: 5px;
+    color: #fff;
+}
+
+.btn-back-creator:hover
+{
+    background-color:red;
+    box-shadow: 0px 1px 3px #666;
+}
+
+.level-creator-content h2
+{
+    font-size: 2rem;
+}
+
+.creator-div
+{
+    border-radius: 5px;
+}
+
+.creator-div label
+{
+    font-size: 1.2rem;
+}
+
+.creator-div input
+{
+    text-transform: uppercase;
+}
+
+.creator-div input, select
+{
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #666;
+}
+
+
+.time-creator
+{
+    border: 1px solid #666;
+}
+
+input::-webkit-inner-spin-button { 
+    -webkit-appearance: none;
+}
+
+#btn_create
+{
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 1rem;
+}
+
+/* GAME STARTER STYLE */
+
+.game-start-container
+{
+    background-color: rgb(0, 0, 0,.8);
+    color: #fff;
+}
+
+.game-start-content p
+{
+    font-size: 2rem;
+}
+
+.game-start-content ul
+{
+    list-style: none;
+    border: 2px solid;
+    border-radius: 5px;
+}
+
+.game-start-content li
+{
+    font-size: 1.2rem;
+}
+
+.game-start-container .btn-backToMenu
+{
+    border-radius: 5px;
+    color: #fff;
+    border: 2px solid #fff;
+    background-color: transparent;
+    outline: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .5s;
+}
+
+.game-start-container .btn-backToMenu:hover
+{
+    background-color: #fff;
+    color: rgb(0, 0, 0,.5);
+}
+
+
+/* GAME OVER STYLE */
+
+.game-over
+{
+    background-color: rgb(0, 0, 0,.8);
+    color: #fff;
+}
+
+.game-over-message
+{
+    font-size: 9rem;
+    letter-spacing: 10px;
+}
+
+.point-span
+{
+    font-size: 4rem;
+}
+
+.expected-answer, .type-error, .timeIsEnd-message
+{
+    font-size: 2.5rem;
+}
+
+.type-error
+{
+    text-decoration: underline red wavy 2px;
+}
+
+.timeIsEnd-message
+{
+    color: #aaa;
+}
+
+@media (max-width: 1200px)
+{
+    .point-span
+    {
+        font-size: 3rem;
+    }
+
+    .expected-answer
+    {
+        font-size: 3rem;
+    }
+
+    .type-error
+    {
+        font-size: 3rem;
+    }
+}
+
+input[type="button"]
+{
+    border-radius: 5px;
+    color: #fff;
+    border: 2px solid #fff;
+    background-color: transparent;
+    outline: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: .5s;
+}
+input[type="button"]:hover
+{
+    background-color: #fff;
+    color: rgb(0, 0, 0,.5);
+}
+
+
+/* GAME STYLE */
+
+.game-container
+{
+    color: #fff;
+    background-color: #666;
+    
+}
+
+.game-header
+{
+    border-bottom: 1px solid #fff;
+    font-size: 1.2rem;
+}
+
+#timer
+{
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.visor-word
+{
+    border-radius: 5px;
+    border: 2px solid;
+}
+
+
+#input_word
+{
+    font-size: 1.5rem;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+
+.game-content p
+{
+    font-size: 1.2rem;
+}
+
+.visor-word p
+{
+    font-size: 2rem;
+}
+
+

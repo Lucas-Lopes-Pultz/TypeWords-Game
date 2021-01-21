@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TypeWords</title>
+    <link rel="shortcut icon" href="./src/icons/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./src/styles/main.css">
+    <link rel="stylesheet" href="./src/styles/style.css">
+    <link rel="stylesheet" href="./src/styles/positions-desktop.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-game-menu">
+            <header title="TypeWords">
+                <h1 class="show writer">TypeWords</h1>
+            </header>
+            <div class="game-menu-content">
+                <span class="total-words"></span>
+                <div class="create-area">
+                    <button title="Criar um nível de jogo" id="btn_popup_creator">Criar um nível de jogo</button>
+                </div>
+                <div class="levels-list">
+                    <h2>Níveis</h2>
+                    <hr>
+                    <ul class="level-list default">
+                        <li><button title="Fácil" class="menu-button Fácil">Fácil</button></li>
+                        <li><button title="Médio" class="menu-button Médio">Médio</button></li>
+                        <li><button title="Difícil" class="menu-button Difícil">Difícil</button></li>
+                        <li><button title="Mestre" class="menu-button Mestre">Mestre</button></li>
+                    </ul>
+
+                    <h2>Níveis criados</h2>
+                    <hr>
+                    <ul class="level-list custom"></ul>
+                    <p class="createdLevels-empty">Você ainda não criou nenhum nível.</p>
+                </div>
+            </div>
+            <footer>
+                <p>&copy; Feito por Lucas Lopes Pultz</p>
+            </footer>
+        </div>
+
+        <div class="level-creator hide">
+            <div class="level-creator-content">
+                <button type="button" class="btn-backToMenu btn-back-creator">X</button>
+                <h2>Criador de Níveis</h2>
+                <div class="creator-div level-name-creator">
+                    <label for="level_name_input">Nome do nível:</label>
+                    <br>
+                    <input class="level-creator-input" type="text" autocomplete="off" id="level_name_input" placeholder="Nome">
+                </div>
+
+                <div class="creator-div game-mode-creator">
+                    <label for="game_mode_input">Modo de jogo:</label>
+                    <br>
+                    <select id="game-mode-select"></select>
+                </div>
+                
+                <div class="creator-div time-creator">
+                    <label for="time-input">Tempo:</label>
+                    <br>
+                    <label for="seconds_input">segundos:</label>
+                    <input class="level-creator-input" type="number" class="time-input" id="seconds_input" placeholder="0">
+                    <label for="miliseconds_input">milisegundos:</label>
+                    <input class="level-creator-input" type="number" id="time-input"  id="miliseconds_input" placeholder="0">
+                </div>
+
+                <div class="creator-div max-length-creator">
+                    <label for="max_length_select">Máximo de caracteres:</label>
+                    <br>
+                    <select id="max_length_select"></select>
+                </div>
+                <button class="btn-submit-creator" id="btn_create">Criar</button>
+            </div>
+        </div>
+        
+        <div class="game-container hide">
+            <div class="game-header">
+                <ul>
+                    <li>Nível: <span class="level"></span></li>
+                    <li>Pontos: <span id="points">0</span></li>
+                    <li>Tempo: <span id="timer"></span></li>
+                    <li>Caracteres: <span id="content_length"></span></li>
+                </ul>
+            </div>
+            
+            <div class="game-content">
+                <div class="visor-word">
+                    <p class="word no-selected"></p>
+                </div>
+                <input type="text" autocomplete="off" spellcheck="false" autofocus id="input_word">
+                <p class="space-message">Aperte espaço quando terminar de escrever.</p>
+            </div>
+
+            <div class="game-start-container hide">
+                <div class="game-start-content">
+                    <p>Nível: <span class="level"></span></p>
+                    <ul class="level-features">
+                        <li>Tempo: <span class="total-time"></span></li>
+                        <li>Máximo de caracteres: <span class="max-length"></span></li>
+                        <li>Modo de jogo: <span class="game-mode"></span></li>
+                    </ul>
+                    <p class="press-enter-message writer">Aperte Enter para começar o jogo</p>
+                    <button class="btn-backToMenu">Voltar para o menu</button>
+                </div>
+            </div>
+
+            <div class="game-over hide">
+                <div class="game-over-content">
+                    <p class="game-over-message writer">Game Over</p>
+                    <p class="point-span"></p>
+                    <p class="expected-answer">Palavra:</p>
+                    <p class="type-error"></p>
+                    <p class="timeIsEnd-message"></p>
+                    <input type="button" id="btn_new_game" value="Novo Jogo">
+                    <input type="button" class="btn-backToMenu" value="Voltar para o Menu">
+                </div>
+            </div>
+
+        </div>
+        
+    </div>
+    
+    <script type="module" src="./public/app.js"></script>
+</body>
+
+</html>
