@@ -4,7 +4,6 @@ import typeWriter from '../src/scripts/typeWriter.js'
 import formValidator from '../src/scripts/form-validator.js'
 import myLibrary from '../src/scripts/workFlow.js'
 
-window.addEventListener('load', loadPage)
 
 const timer = chronometer(elementsDOM.timerSpan)
 
@@ -16,16 +15,16 @@ const words = {
         const json = await response.json()
         return json
     },
-    
+
     async getAllWords() {
         const data = await words.fetchWords()
         const allLevels = myLibrary.objectKeys(data)
         myLibrary.removeElementInArray(allLevels, 'Filmes')
         const allWordsArray = allLevels.flatMap(level => data[level])
-
+        
         return allWordsArray
     },
-
+    
     lengthOfWords(wordsArray, mode) {
         const lengthArray = wordsArray.map(word => word.length)
         if (mode === 'max') return myLibrary.getMaxNumberOf(lengthArray)
@@ -41,13 +40,13 @@ const typeWord = {
         level.setGameLevelToSettings(event.target.classList[1])
         menu.readyGameStarter()
     },
-
+    
     startNewGame() {
         typeWord.resetGame()
         typeWord.startNewTurn()
         /* timer.pause() */
     },
-
+    
     startNewTurn() {
         elementsDOM.answerInput.focus()
         this.resetTurn()
@@ -58,36 +57,36 @@ const typeWord = {
     getWordOfGameMode(modeGame) {
         if (modeGame === 'Letras Aleatórias')
             return gameModes.randomLettersMode(settings.maxWordsLength)
-
+            
         if (modeGame === 'Palavras Aleatórias')
-            return gameModes.randomWordsMode(settings.maxWordsLength)
-
+        return gameModes.randomWordsMode(settings.maxWordsLength)
+        
         return gameModes.getWordsFrom(modeGame, settings.maxWordsLength)
     },
-
+    
     addTurnDataToHTML(gameOverCause) {
         typeWriter(elementsDOM.gameOverMessage, 100)
         elementsDOM.gameOverPoints.textContent = `Pontos: ${this.points}`
         elementsDOM.gameOverExpectedAnswer.textContent = `palavra: ${elementsDOM.word.textContent}`
         elementsDOM.gameOverTypeError.textContent = elementsDOM.answerInput.value
         elementsDOM.TimeIsEndMessage.textContent = ''
-
+        
         if (gameOverCause === 'timeIsEnd') {
             elementsDOM.gameOverTypeError.textContent = ''
             elementsDOM.TimeIsEndMessage.textContent = 'Que pena o tempo acabou :('
         }
     },
-
+    
     gameOver(gameOverCause) {
         myLibrary.show(elementsDOM.gameOverArea)
         this.stopGame()
         this.addTurnDataToHTML(gameOverCause)
     },
-
+    
     updatePoints(value) {
         value === 'reset' ?
-            this.points = 0 :
-            this.points += value
+        this.points = 0 :
+        this.points += value
 
         elementsDOM.pointsSpan.textContent = this.points
     },
@@ -96,7 +95,7 @@ const typeWord = {
         timer.pause()
         elementsDOM.answerInput.setAttribute('readonly', 'readonly')
     },
-
+    
     endTime(event) {
         if (event.detail.endTime) typeWord.gameOver('timeIsEnd')
     },
@@ -120,7 +119,7 @@ const typeWord = {
         return !myLibrary.isOpen(elementsDOM.gameStarter) &&
             !myLibrary.isOpen(elementsDOM.gameOverArea) && !menu.menuIsOpen
     },
-
+    
     resetGame() {
         this.resetTurn()
         this.updatePoints('reset')
@@ -128,7 +127,7 @@ const typeWord = {
         elementsDOM.answerInput.focus()
         myLibrary.hide(elementsDOM.gameOverArea)
     },
-
+    
     resetTurn() {
         timer.stop()
         elementsDOM.answerInput.value = ''
@@ -138,23 +137,23 @@ const typeWord = {
 
 const gameModes = {
     listName: ['Palavras Aleatórias', 'Letras Aleatórias'],
-
+    
     concatOtherGameModesToListName() {
         const otherGamemodes = [
             'Animais', 'Cores', 'Filmes',
             'Heróis', 'Objetos', 'Países',
-            'Plantas', 'Verbos', 'Alimentos', 
-            'Profissões','Nomes Femininos', 'Nomes Masculinos'
+            'Plantas', 'Verbos', 'Alimentos',
+            'Profissões', 'Nomes Femininos', 'Nomes Masculinos'
         ]
 
         this.listName = this.listName.concat(otherGamemodes.sort())
     },
-
+    
     addToList() {
         this.concatOtherGameModesToListName()
         for (let gameMode of this.listName) {
             const option = myLibrary.createElement('option',
-                { value: gameMode }, elementsDOM.levelCreatorGameMode)
+            { value: gameMode }, elementsDOM.levelCreatorGameMode)
             option.textContent = gameMode
         }
     },
@@ -162,7 +161,7 @@ const gameModes = {
     randomLettersMode(maxLength) {
         const randomLength = myLibrary.getRandomNumber(maxLength, 1)
         const allLetters = myLibrary.getAllLetters()
-
+        
         const randomIndexs = () => {
             let randomIndexsArray = []
             for (let i = 0; i < randomLength; i++) {
@@ -172,18 +171,18 @@ const gameModes = {
         }
 
         const randomLetters = () => randomIndexs().map(index => allLetters[index]).join('')
-
+        
         return randomLetters()
     },
-
+    
     async randomWordsMode(maxLength) {
         const allWords = await words.getAllWords()
         const allWordsFiltered = allWords.filter(word => word.length <= maxLength)
         const randomIndex = myLibrary.getRandomNumber(allWordsFiltered.length)
-
+        
         return allWordsFiltered[randomIndex]
     },
-
+    
     async getWordsFrom(wordsArrayName, maxLength) {
         const wordsData = await this.getGameModeWords(wordsArrayName)
         const wordsDataFiltered = wordsData.filter(word => word.length <= maxLength)
@@ -204,10 +203,10 @@ const menu = {
         return !myLibrary.isOpen(elementsDOM.gameContainer)
     },
     
-    close(){
+    close() {
         myLibrary.hide(elementsDOM.menuContainer)
     },
-        
+
     open() {
         myLibrary.show(elementsDOM.menuContainer)
         myLibrary.hide(elementsDOM.gameStarter)
@@ -215,49 +214,49 @@ const menu = {
         myLibrary.hide(elementsDOM.gameContainer)
         myLibrary.hide(elementsDOM.popupLevelCreator)
     },
-
+    
     readyGameStarter() {
         menu.close()
         myLibrary.show(elementsDOM.gameContainer)
         myLibrary.show(elementsDOM.gameStarter)
         typeWord.resetGame()
-
+        
         level.showFeaturesOfLevel()
         typeWriter(elementsDOM.pressEnterMessage, 50)
     },
 
-    readyLevelCreator(){
-
+    readyLevelCreator() {
+        
     },
-
+    
     addAnimationToButtons() {
         elementsDOM.menuButtons.forEach(button => {
             button.classList.add('animate-btn')
         })
     },
-
+    
     addEventListenerToButtons() {
         for (let button of elementsDOM.menuButtons) {
             button.addEventListener('click', typeWord.readyGame)
         }
     },
-
+    
     addEventListenerToRemoveButtons() {
         elementsDOM.setElementDOM('btnRemoveLevel', '.btn-remove-level', 'all')
         elementsDOM.btnRemoveLevel.forEach(btn => {
             btn.addEventListener('click', level.removeCreatedLevel)
         })
     },
-
-    async getTotalWords(){
+    
+    async getTotalWords() {
         const data = await words.fetchWords()
         const keys = Object.keys(data)
         const totalWords = keys.flatMap(key => data[key])
         
         return totalWords.length
     },
-
-    async showTotalWords(){
+    
+    async showTotalWords() {
         const totalWords = await this.getTotalWords()
         elementsDOM.totalWordsSpan.textContent = `Total de Palavras: ${totalWords}`
     }
@@ -275,15 +274,15 @@ const levelCreator = {
     getInputsData() {
         const inputs = Array.from(elementsDOM.levelCreatorInputs)
             .map(input => myLibrary.getNumberInString(input.value))
+            
+            const selectedIndexGameMode = elementsDOM.levelCreatorGameMode.selectedIndex
+        const selectOptionGameMode =
+        elementsDOM.levelCreatorGameMode.options[selectedIndexGameMode].value
 
-        const selectedIndexGameMode = elementsDOM.levelCreatorGameMode.selectedIndex
-        const selectOptionGameMode = 
-            elementsDOM.levelCreatorGameMode.options[selectedIndexGameMode].value
-
-
+        
         const selectedIndexMaxLength = elementsDOM.levelCreatorMaxLength.selectedIndex
-        const selectOptionMaxLength = 
-            Number(elementsDOM.levelCreatorMaxLength.options[selectedIndexMaxLength].value)
+        const selectOptionMaxLength =
+        Number(elementsDOM.levelCreatorMaxLength.options[selectedIndexMaxLength].value)
 
         return [
             ...inputs,
@@ -296,7 +295,7 @@ const levelCreator = {
         Array.from(elementsDOM.levelCreatorInputs).forEach(input => input.value = '')
         elementsDOM.levelCreatorGameMode.selectedIndex = 0
     },
-
+    
 
     create() {
         menu.open()
@@ -314,13 +313,13 @@ const levelCreator = {
         const validator = formValidator.inputsAreEmpty(
             elementsDOM.levelCreatorInputs,
             'Preencha todos os campos'
-        )
-
+            )
+            
         validator.thereException ?
-            alert(validator.errorMessage.message) :
-            levelCreator.create()
+        alert(validator.errorMessage.message) :
+        levelCreator.create()
     },
-
+    
     async getMinAndMaxLength(gameModeName) {
         let maxLength = 0
         let minLength = 0
@@ -341,26 +340,26 @@ const levelCreator = {
             maxLength = words.lengthOfWords(gameModeWords, 'max')
             minLength = words.lengthOfWords(gameModeWords, 'min')
         }
-
+        
         return {
             maxLength,
             minLength
         }
     },
-
+    
     addOption(lengthValue) {
         const option = `<option value="${lengthValue}">${lengthValue}</option>`
         elementsDOM.levelCreatorMaxLength.innerHTML += option
     },
-
+    
     async changeSizeOfMaxLengthSelect() {
         const selectedIndex = elementsDOM.levelCreatorGameMode.selectedIndex
         const gameModeName = elementsDOM.levelCreatorGameMode[selectedIndex].value
         const { maxLength, minLength } = await levelCreator.getMinAndMaxLength(gameModeName)
-        
+
         elementsDOM.levelCreatorMaxLength.innerHTML = ''
         for (let length = minLength; length <= maxLength; length++) levelCreator.addOption(length)
-        
+
     },
 
     async addOptionsRandomWords() {
@@ -380,16 +379,16 @@ const level = {
             this.createItem(levelName)
             menu.addEventListenerToRemoveButtons()
         },
-
+        
         createItem(levelName) {
             const li = myLibrary.createElement('li', null, elementsDOM.listCreatedLevels)
-
+            
             const button = myLibrary.createElement('button', {
                 type: 'button',
                 class: 'menu-button btn-level-list',
                 title: levelName
             }, li)
-
+            
             const btnRemove = myLibrary.createElement('button', {
                 type: 'button',
                 class: 'btn-remove-level',
@@ -399,7 +398,7 @@ const level = {
 
             button.innerHTML = levelName
             button.classList.add('animate-btn')
-
+            
             button.addEventListener('click', (event) => {
                 level.setGameLevelToSettings(event.target.textContent)
                 menu.readyGameStarter()
@@ -417,20 +416,20 @@ const level = {
             levelName, seconds, miliseconds, maxWordsLength, gameMode
         }
     },
-
+    
     getLevel(name) {
         return this.levels.find(level => String(level.levelName) === String(name))
     },
 
     showFeaturesOfLevel() {
         const setNameLevelToSpans = element => element.textContent = settings.levelName
-
+        
         elementsDOM.levelSpan.forEach(setNameLevelToSpans)
         elementsDOM.totalTime.textContent = getFormatedTime(settings.seconds, settings.miliseconds)
         elementsDOM.maxLength.textContent = settings.maxWordsLength
         elementsDOM.showGameMode.textContent = settings.gameMode
     },
-
+    
     setCustomLevelTolevels(levelFeatures) {
         level.levels.push(levelFeatures)
     },
@@ -442,20 +441,20 @@ const level = {
         this.showMessageCreatedLevelsIsEmpty()
 
     },
-
+    
     async setLevelsToMenuList() {
         await this.callLocalStorageFunctions()
         const levels = this.getLevelsFromLocalStorage()
         levels.forEach(level => this.createdLevelsList.createItem(level.levelName))
         menu.addEventListenerToRemoveButtons()
     },
-
+    
     async setDefaultLevelsToLevels() {
         this.levels = [
             this.newLevel('Fácil', 6, 0, 4, 'Palavras Aleatórias'),
             this.newLevel('Médio', 5, 0, 7, 'Palavras Aleatórias'),
             this.newLevel('Difícil', 4, 0,
-                words.lengthOfWords(await words.getAllWords(), 'max'), 'Palavras Aleatórias'),
+            words.lengthOfWords(await words.getAllWords(), 'max'), 'Palavras Aleatórias'),
             this.newLevel('Mestre', 5, 0, 8, 'Letras Aleatórias')
         ]
     },
@@ -473,36 +472,36 @@ const level = {
         const levels = localStorage.getItem('levels')
         return JSON.parse(levels)
     },
-
+    
     setLevelsToLocalStorage() {
         const createdLevels = this.levels.slice(4, this.levels.length)
         const levelsJSON = JSON.stringify(createdLevels)
         localStorage.setItem('levels', levelsJSON)
     },
-
+    
     showMessageCreatedLevelsIsEmpty() {
         const levels = this.getLevelsFromLocalStorage()
         levels.length === 0 ?
-            myLibrary.show(elementsDOM.messageCreatedLevelIsEmpty) :
+        myLibrary.show(elementsDOM.messageCreatedLevelIsEmpty) :
             myLibrary.hide(elementsDOM.messageCreatedLevelIsEmpty)
-    },
-
+        },
+        
     findClassIntoElementChilds(parent, className) {
         const childsArray = Array.from(parent.children)
         const elementFound = childsArray
             .find(element => element.classList.contains(className))
-        return elementFound
+            return elementFound
     },
-
+    
     removeCreatedLevel(event) {
         const li = event.target.parentNode
-
+        
         level.removeLevelFromList(li)
         level.removeLevelFromLevel(li)
         level.removeLevelFromStorage()
-
+        
     },
-
+    
     removeLevelFromList(li) {
         const ul = li.parentNode
         myLibrary.addClass(li, 'removed')
@@ -510,7 +509,7 @@ const level = {
         const liToRemove = this.findClassIntoElementChilds(ul, 'removed')
         ul.removeChild(liToRemove)
     },
-
+    
     removeLevelFromStorage() {
         this.setLevelsToLocalStorage()
         this.showMessageCreatedLevelsIsEmpty()
@@ -521,7 +520,7 @@ const level = {
         const levelToRemove = this.getLevel(levelButton.textContent)
         myLibrary.removeElementInArray(this.levels, levelToRemove)
     }
-
+    
 }
 
 
@@ -530,35 +529,34 @@ const shortcuts = {
         const EnterIsPressed = event.key === 'Enter'
         const EscapeIsPressed = event.key === 'Escape'
         const spaceIsPressed = event.key === ' '
-
+        
         if (EnterIsPressed) shortcuts.enterShortcutFunctions()
         if (EscapeIsPressed) shortcuts.escapeShortcutFunctions()
         if (spaceIsPressed) shortcuts.spaceShortcutFunctions()
     },
-
+    
     enterShortcutFunctions() {
-        if (myLibrary.isOpen(elementsDOM.gameOverArea))
-            typeWord.startNewGame()
-
+        if (typeWord.gameIsRunning()) typeWord.validateAnswer(elementsDOM.answerInput.value.trim())
+        
         if (myLibrary.isOpen(elementsDOM.gameStarter)) {
             myLibrary.hide(elementsDOM.gameStarter)
             typeWord.startNewGame()
         }
     },
-
+    
     escapeShortcutFunctions() {
         const arrayBtnsBack = Array.from(elementsDOM.btnsBackToMenu)
         const btnBackParentIsOpen = arrayBtnsBack
-            .some(btn => myLibrary.isOpen(btn.parentNode.parentNode))
+        .some(btn => myLibrary.isOpen(btn.parentNode.parentNode))
 
         if (btnBackParentIsOpen || myLibrary.isOpen(elementsDOM.gameOverArea)) {
             menu.open()
             timer.stop()
         }
     },
-
+    
     spaceShortcutFunctions() {
-        if (typeWord.gameIsRunning()) typeWord.validateAnswer(elementsDOM.answerInput.value.trim())
+        if (myLibrary.isOpen(elementsDOM.gameOverArea)) typeWord.startNewGame()
     }
 }
 
@@ -566,16 +564,14 @@ function loadPage() {
     menu.addEventListenerToButtons()
     menu.addAnimationToButtons()
     menu.showTotalWords()
-
+    
     typeWriter(elementsDOM.TypeWordsTitle, 200)
     words.fetchWords()
     gameModes.addToList()
-
+    
     level.setLevelsToMenuList()
 }
 
-document.addEventListener('timeChange', typeWord.endTime)
-window.addEventListener('keyup', shortcuts.event)
 
 elementsDOM.btnCreateLevelPopup.addEventListener('click', levelCreator.open)
 elementsDOM.btnCreateLevel.addEventListener('click', levelCreator.validate)
@@ -584,3 +580,6 @@ elementsDOM.levelCreatorGameMode.addEventListener('change', levelCreator.changeS
 elementsDOM.btnsBackToMenu.forEach(btn => btn.addEventListener('click', menu.open))
 elementsDOM.btnNewGame.addEventListener('click', typeWord.startNewGame)
 
+document.addEventListener('timeChange', typeWord.endTime)
+window.addEventListener('keyup', shortcuts.event)
+window.addEventListener('load', loadPage)
